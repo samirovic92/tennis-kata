@@ -6,7 +6,8 @@ public enum Scores {
     FIFTEEN("15"),
     THIRTY("30"),
     FORTY("40"),
-    WIN_GAME("Win Game");
+    WIN_GAME("Win Game"),
+    ADVANTAGE("ADV");
 
     private final String value;
 

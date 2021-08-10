@@ -1,7 +1,5 @@
 package domaine;
 
-import static domaine.Scores.WIN_GAME;
-
 public class Game {
     private Player player1;
     private Player player2;
@@ -15,9 +13,19 @@ public class Game {
         if(isEnded())
             return;
         if (isPlayer1(playerName))
-            player1.addNewPoint();
+            addNewPointProcess(player1, player2);
         else
-            player2.addNewPoint();
+            addNewPointProcess(player2, player1);
+    }
+
+    private void addNewPointProcess(Player p1, Player p2) {
+        if (p1.isDeuce(p2)) {
+            p1.advantage();
+        } else if (p2.isAdvantage()) {
+            p2.backToEquality();
+        } else {
+            p1.addNewPoint();
+        }
     }
 
     public String winner() {

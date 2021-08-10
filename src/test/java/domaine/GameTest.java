@@ -42,6 +42,7 @@ class GameTest {
         game.scorePoint(playerName1);
         game.scorePoint(playerName1);
         game.scorePoint(playerName1);
+
         game.scorePoint(playerName2);
 
         // Then
@@ -61,12 +62,107 @@ class GameTest {
         game.scorePoint(playerName1);
         game.scorePoint(playerName1);
         game.scorePoint(playerName1);
+
         game.scorePoint(playerName2);
+
         game.scorePoint(playerName1);
 
         // Then
         assertEquals(game.getScore(playerName1), WIN_GAME.getValue());
         assertEquals(game.getScore(playerName2), FIFTEEN.getValue());
         assertEquals(game.winner(), String.format("%s win the game", playerName1));
+    }
+
+    @Test
+    public void should_not_return_the_winner(){
+
+        // Given
+        String playerName1 = "Player 1";
+        String playerName2 = "Player 2";
+        game.startGame(playerName1, playerName2);
+
+        // when
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+
+        game.scorePoint(playerName2);
+
+        // Then
+        assertEquals(game.getScore(playerName1), FORTY.getValue());
+        assertEquals(game.getScore(playerName2), FIFTEEN.getValue());
+        assertEquals(game.winner(), null);
+    }
+
+    @Test
+    public void should_return_ADVANTAGE_as_value_of_score() {
+        // Given
+        String playerName1 = "Player 1";
+        String playerName2 = "Player 2";
+        game.startGame(playerName1, playerName2);
+
+        // when
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+
+        game.scorePoint(playerName1);
+
+        // Then
+        assertEquals(game.getScore(playerName1), ADVANTAGE.getValue());
+
+    }
+
+    @Test
+    public void the_player_should_win_the_game_after_ADVANTAGE() {
+        // Given
+        String playerName1 = "Player 1";
+        String playerName2 = "Player 2";
+        game.startGame(playerName1, playerName2);
+
+        // when
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+
+        game.scorePoint(playerName1);
+        assertEquals(game.getScore(playerName1), ADVANTAGE.getValue());
+        game.scorePoint(playerName1);
+
+        // Then
+        assertEquals(game.getScore(playerName1), WIN_GAME.getValue());
+    }
+
+    @Test
+    public void should_return_to_DEUCE_after_ADVANATGE() {
+        // Given
+        String playerName1 = "Player 1";
+        String playerName2 = "Player 2";
+        game.startGame(playerName1, playerName2);
+
+        // when
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName1);
+
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+        game.scorePoint(playerName2);
+
+        game.scorePoint(playerName1);
+        game.scorePoint(playerName2);
+
+        // Then
+        assertEquals(game.getScore(playerName1), FORTY.getValue());
+        assertEquals(game.getScore(playerName2), FORTY.getValue());
+
     }
 }
