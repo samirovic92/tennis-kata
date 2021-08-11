@@ -58,16 +58,20 @@ class PlayerTest {
     @Test
     public void should_verify_if_the_player_is_a_winner() {
         // Given
-        Player player = new Player("player 1");
+        Player player1 = new Player("player 1");
+        Player player2 = new Player("player 2");
 
         // When
-        player.addNewPoint();
-        player.addNewPoint();
-        player.addNewPoint();
-        player.addNewPoint();
+        for (int i =1; i <=6; i++) {
+            player1.addNewPoint();
+            player1.addNewPoint();
+            player1.addNewPoint();
+            player1.addNewPoint();
+            player1.winNewSet();
+        }
 
         // Then
-        assertTrue(player.isTheWinner());
+        assertTrue(player1.wonTheMatch(player2));
     }
 
     @Test
@@ -138,5 +142,35 @@ class PlayerTest {
         // Then
         assertEquals(player1.getScore(), FORTY.getValue());
         assertEquals(player2.getScore(), FORTY.getValue());
+    }
+
+    @Test
+    public void should_increment_the_set_and_initialize_the_score_for_the_winner() {
+        // Given
+        Player player1 = new Player("player 1");
+
+        // When
+        player1.addNewPoint();
+        player1.addNewPoint();
+        player1.addNewPoint();
+        player1.addNewPoint();
+        player1.winNewSet();
+
+        //Then
+        assertEquals(player1.getScore(), ZERO.getValue());
+        assertEquals(player1.getSet(), 1);
+    }
+
+    @Test
+    public void should_not_increment_the_set_and_initialize_the_score() {
+        // Given
+        Player player1 = new Player("player 1");
+
+        // When
+        player1.addNewPoint();
+        player1.addNewPoint();
+
+        //Then
+        assertThrows(ChangeScoreNotAuthorized.class, player1::winNewSet);
     }
 }

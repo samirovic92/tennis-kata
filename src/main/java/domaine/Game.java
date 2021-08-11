@@ -25,14 +25,18 @@ public class Game {
             p2.backToEquality();
         } else {
             p1.addNewPoint();
+            if(p1.wonTheGame()) {
+                p1.winNewSet();
+                p2.loseSet();
+            }
         }
     }
 
     public String winner() {
         String winner = "%s win the game";
-        if(player1.isTheWinner())
+        if(player1.wonTheMatch(player2))
             return String.format(winner, player1.getName());
-        if(player2.isTheWinner())
+        if(player2.wonTheMatch(player1))
             return String.format(winner, player2.getName());
         return null;
     }
@@ -52,7 +56,7 @@ public class Game {
     }
 
     private boolean isEnded() {
-        return player1.isTheWinner() || player2.isTheWinner();
+        return player1.wonTheMatch(player2) || player2.wonTheMatch(player1);
     }
 
     private boolean isPlayer1(String playerName) {

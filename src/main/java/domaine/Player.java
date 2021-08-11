@@ -48,7 +48,11 @@ public class Player {
         return FORTY.getValue().equals(score) && otherPlayer.getScore().equals(score);
     }
 
-    public boolean isTheWinner() {
+    public boolean wonTheMatch(Player otherPlayer) {
+        return (set == 6 && (set - otherPlayer.getSet()) >= 2) || set == 7;
+    }
+
+    public boolean wonTheGame() {
         return WIN_GAME.getValue().equals(score);
     }
 
@@ -56,4 +60,15 @@ public class Player {
         return ADVANTAGE.getValue().equals(score);
     }
 
+    public void winNewSet() {
+        if(!wonTheGame()){
+            throw new ChangeScoreNotAuthorized(String.format("you can't initialize the score for the player %s", name));
+        }
+        this.set++;
+        this.score = ZERO.getValue();
+    }
+
+    public void loseSet() {
+        this.score = ZERO.getValue();
+    }
 }
