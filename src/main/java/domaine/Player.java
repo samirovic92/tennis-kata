@@ -9,66 +9,64 @@ import static domaine.Scores.*;
 public class Player {
 
     private final String name;
-    private String score;
-    private Integer set;
+    private String point;
+    private Integer game;
+    private Integer tieBreak;
 
     public Player(String name) {
         this.name = name;
-        this.score = "0";
-        this.set = 0;
+        this.point = "0";
+        this.game = 0;
     }
 
     public void addNewPoint() {
-        if (ZERO.getValue().equals(score))
-            score = FIFTEEN.getValue();
-        else if (FIFTEEN.getValue().equals(score))
-            score = THIRTY.getValue();
-        else if (THIRTY.getValue().equals(score))
-            score = FORTY.getValue();
-        else if (FORTY.getValue().equals(score) || ADVANTAGE.getValue().equals(score) )
-            score = WIN_GAME.getValue();
+        if (ZERO.getValue().equals(point))
+            point = FIFTEEN.getValue();
+        else if (FIFTEEN.getValue().equals(point))
+            point = THIRTY.getValue();
+        else if (THIRTY.getValue().equals(point))
+            point = FORTY.getValue();
+        else if (FORTY.getValue().equals(point) || ADVANTAGE.getValue().equals(point) )
+            point = WIN_GAME.getValue();
 
     }
 
     public void advantage() {
-        if(!FORTY.getValue().equals(score)){
+        if(!FORTY.getValue().equals(point)){
             throw new ChangeScoreNotAuthorized(String.format("you can't change the score to ADVANTAGE for they player %s", name));
         }
-        this.score = ADVANTAGE.getValue();
+        this.point = ADVANTAGE.getValue();
     }
 
-    public void backToEquality() {
-        if(!ADVANTAGE.getValue().equals(score)){
+    public void backToDeuce() {
+        if(!ADVANTAGE.getValue().equals(point)){
             throw new ChangeScoreNotAuthorized(String.format("you can't back the score to FORTY for the player %s", name));
         }
-        this.score = FORTY.getValue();
+        this.point = FORTY.getValue();
     }
 
     public boolean isDeuce(Player otherPlayer){
-        return FORTY.getValue().equals(score) && otherPlayer.getScore().equals(score);
+        return FORTY.getValue().equals(point) && otherPlayer.getPoint().equals(point);
     }
 
     public boolean wonTheMatch(Player otherPlayer) {
-        return (set == 6 && (set - otherPlayer.getSet()) >= 2) || set == 7;
+        return (game == 6 && (game - otherPlayer.getGame()) >= 2) || game == 7;
     }
 
     public boolean wonTheGame() {
-        return WIN_GAME.getValue().equals(score);
+        return WIN_GAME.getValue().equals(point);
     }
 
-    public boolean isAdvantage() {
-        return ADVANTAGE.getValue().equals(score);
+    public boolean hasAdvantage() {
+        return ADVANTAGE.getValue().equals(point);
     }
 
-    public void winNewSet() {
-        if(!wonTheGame()){
-            throw new ChangeScoreNotAuthorized(String.format("you can't initialize the score for the player %s", name));
-        }
-        this.set++;
-        this.score = ZERO.getValue();
+    public void winNewGame() {
+        this.game++;
+        this.point = ZERO.getValue();
     }
 
-    public void loseSet() {
-        this.score = ZERO.getValue();
+    public void loseGame() {
+        this.point = ZERO.getValue();
     }
 }

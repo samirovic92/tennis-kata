@@ -18,7 +18,7 @@ class PlayerTest {
         player.addNewPoint();
 
         // Then
-        assertEquals(player.getScore(), FIFTEEN.getValue());
+        assertEquals(player.getPoint(), FIFTEEN.getValue());
     }
 
     @Test
@@ -31,11 +31,11 @@ class PlayerTest {
         player.addNewPoint();
         player.addNewPoint();
         player.addNewPoint();
-        assertEquals(player.getScore(), WIN_GAME.getValue());
+        assertEquals(player.getPoint(), WIN_GAME.getValue());
         player.addNewPoint();
 
         // Then
-        assertEquals(player.getScore(), WIN_GAME.getValue());
+        assertEquals(player.getPoint(), WIN_GAME.getValue());
     }
 
     @Test
@@ -48,11 +48,11 @@ class PlayerTest {
         player.addNewPoint();
         player.addNewPoint();
         player.addNewPoint();
-        assertEquals(player.getScore(), WIN_GAME.getValue());
+        assertEquals(player.getPoint(), WIN_GAME.getValue());
         player.addNewPoint();
 
         // Then
-        assertEquals(player.getScore(), WIN_GAME.getValue());
+        assertEquals(player.getPoint(), WIN_GAME.getValue());
     }
 
     @Test
@@ -67,7 +67,7 @@ class PlayerTest {
             player1.addNewPoint();
             player1.addNewPoint();
             player1.addNewPoint();
-            player1.winNewSet();
+            player1.winNewGame();
         }
 
         // Then
@@ -106,7 +106,7 @@ class PlayerTest {
         player1.advantage();
 
         // Then
-        assertEquals(player1.getScore(), ADVANTAGE.getValue());
+        assertEquals(player1.getPoint(), ADVANTAGE.getValue());
     }
 
     @Test
@@ -137,11 +137,11 @@ class PlayerTest {
         player2.addNewPoint();
 
         player1.advantage();
-        player1.backToEquality();
+        player1.backToDeuce();
 
         // Then
-        assertEquals(player1.getScore(), FORTY.getValue());
-        assertEquals(player2.getScore(), FORTY.getValue());
+        assertEquals(player1.getPoint(), FORTY.getValue());
+        assertEquals(player2.getPoint(), FORTY.getValue());
     }
 
     @Test
@@ -154,23 +154,11 @@ class PlayerTest {
         player1.addNewPoint();
         player1.addNewPoint();
         player1.addNewPoint();
-        player1.winNewSet();
+        player1.winNewGame();
 
         //Then
-        assertEquals(player1.getScore(), ZERO.getValue());
-        assertEquals(player1.getSet(), 1);
+        assertEquals(player1.getPoint(), ZERO.getValue());
+        assertEquals(player1.getGame(), 1);
     }
 
-    @Test
-    public void should_not_increment_the_set_and_initialize_the_score() {
-        // Given
-        Player player1 = new Player("player 1");
-
-        // When
-        player1.addNewPoint();
-        player1.addNewPoint();
-
-        //Then
-        assertThrows(ChangeScoreNotAuthorized.class, player1::winNewSet);
-    }
 }

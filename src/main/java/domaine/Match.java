@@ -1,6 +1,6 @@
 package domaine;
 
-public class Game {
+public class Match {
     private Player player1;
     private Player player2;
 
@@ -21,13 +21,13 @@ public class Game {
     private void addNewPointProcess(Player p1, Player p2) {
         if (p1.isDeuce(p2)) {
             p1.advantage();
-        } else if (p2.isAdvantage()) {
-            p2.backToEquality();
+        } else if (p2.hasAdvantage()) {
+            p2.backToDeuce();
         } else {
             p1.addNewPoint();
             if(p1.wonTheGame()) {
-                p1.winNewSet();
-                p2.loseSet();
+                p1.winNewGame();
+                p2.loseGame();
             }
         }
     }
@@ -43,16 +43,16 @@ public class Game {
 
     // ------------------
 
-    public String getScore(String playerName) {
+    public String getPoint(String playerName) {
         if (isPlayer1(playerName))
-            return player1.getScore();
-        return player2.getScore();
+            return player1.getPoint();
+        return player2.getPoint();
     }
 
-    public Integer getSet(String playerName) {
+    public Integer getGameScore(String playerName) {
         if (isPlayer1(playerName))
-            return player1.getSet();
-        return player2.getSet();
+            return player1.getGame();
+        return player2.getGame();
     }
 
     private boolean isEnded() {
