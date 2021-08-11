@@ -57,8 +57,6 @@ public class Match {
         return null;
     }
 
-    // ------------------
-
     public String getPoint(String playerName) {
         if (isPlayer1(playerName))
             return player1.getPoint();
