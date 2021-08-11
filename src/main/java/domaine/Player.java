@@ -15,7 +15,7 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.point = "0";
+        this.point = ZERO.getValue();
         this.game = 0;
         this.tieBreakPoint = 0;
     }
