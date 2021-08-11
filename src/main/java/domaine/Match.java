@@ -35,7 +35,7 @@ public class Match {
             winningPlayer.addNewPoint();
             if (winningPlayer.wonTheGame()) {
                 winningPlayer.winNewGame();
-                winningPlayer.loseGame();
+                losingPlayer.loseGame();
             }
         }
     }

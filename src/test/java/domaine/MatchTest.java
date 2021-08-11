@@ -130,6 +130,7 @@ class MatchTest {
 
         // Then
         assertEquals(match.getPoint(playerName1), ZERO.getValue());
+        assertEquals(match.getPoint(playerName2), ZERO.getValue());
         assertEquals(match.getGameScore(playerName1), 1);
         assertEquals(match.getGameScore(playerName2), 0);
     }
@@ -190,7 +191,7 @@ class MatchTest {
     }
 
     @Test
-    public void should_return_the_winner_in_case_of_more_than_six_game(){
+    public void should_return_the_winner_in_case_of_set_of_more_than_six_game(){
 
         // Given
         String playerName1 = "Player 1";

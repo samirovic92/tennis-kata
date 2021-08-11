@@ -22,7 +22,7 @@ class PlayerTest {
     }
 
     @Test
-    public void should_add_New_tie_Break_Point_() {
+    public void should_add_New_tie_Break_Point() {
         // Given
         Player player = new Player("player 1");
 
@@ -35,23 +35,6 @@ class PlayerTest {
 
     @Test
     public void should_not_add_New_Point_if_player_win_the_game() {
-        // Given
-        Player player = new Player("player 1");
-
-        // When
-        player.addNewPoint();
-        player.addNewPoint();
-        player.addNewPoint();
-        player.addNewPoint();
-        assertEquals(player.getPoint(), WIN_GAME.getValue());
-        player.addNewPoint();
-
-        // Then
-        assertEquals(player.getPoint(), WIN_GAME.getValue());
-    }
-
-    @Test
-    public void should_return_advantage_in_case_of_DEUCE() {
         // Given
         Player player = new Player("player 1");
 
@@ -114,30 +97,24 @@ class PlayerTest {
     }
 
     @Test
-    public void the_score_should_equal_in_ADVANTAGE_case() {
+    public void the_score_should_back_to_DEUCE_after_ADVANTAGE() {
         // Given
         Player player1 = new Player("player 1");
-        Player player2 = new Player("player 2");
 
         // When
         player1.addNewPoint();
         player1.addNewPoint();
         player1.addNewPoint();
 
-        player2.addNewPoint();
-        player2.addNewPoint();
-        player2.addNewPoint();
-
         player1.advantage();
         player1.backToDeuce();
 
         // Then
         assertEquals(player1.getPoint(), FORTY.getValue());
-        assertEquals(player2.getPoint(), FORTY.getValue());
     }
 
     @Test
-    public void should_increment_the_set_and_initialize_the_score_for_the_winner() {
+    public void should_increment_the_game_and_initialize_the_score_point_for_the_winner() {
         // Given
         Player player1 = new Player("player 1");
 
