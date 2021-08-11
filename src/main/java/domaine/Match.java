@@ -1,5 +1,7 @@
 package domaine;
 
+import static domaine.Scores.FORTY;
+
 public class Match {
     private Player player1;
     private Player player2;
@@ -18,18 +20,32 @@ public class Match {
             addNewPointProcess(player2, player1);
     }
 
-    private void addNewPointProcess(Player p1, Player p2) {
-        if (p1.isDeuce(p2)) {
-            p1.advantage();
-        } else if (p2.hasAdvantage()) {
-            p2.backToDeuce();
+    private boolean isEnded() {
+        return player1.wonTheMatch(player2) || player2.wonTheMatch(player1);
+    }
+
+    private void addNewPointProcess(Player winningPlayer, Player losingPlayer) {
+        if (isDeuce()) {
+            winningPlayer.advantage();
+        } else if (losingPlayer.hasAdvantage()) {
+            losingPlayer.backToDeuce();
+        } else if (isTieBreak()) {
+            winningPlayer.addNewTieBreakPoint();
         } else {
-            p1.addNewPoint();
-            if(p1.wonTheGame()) {
-                p1.winNewGame();
-                p2.loseGame();
+            winningPlayer.addNewPoint();
+            if (winningPlayer.wonTheGame()) {
+                winningPlayer.winNewGame();
+                winningPlayer.loseGame();
             }
         }
+    }
+
+    private boolean isDeuce() {
+        return FORTY.getValue().equals(player1.getPoint()) && FORTY.getValue().equals(player2.getPoint());
+    }
+
+    private boolean isTieBreak() {
+        return player1.getGame() == 6 && player2.getGame() == 6;
     }
 
     public String winner() {
@@ -49,14 +65,16 @@ public class Match {
         return player2.getPoint();
     }
 
+    public Integer getTieBreakPoint(String playerName) {
+        if (isPlayer1(playerName))
+            return player1.getTieBreakPoint();
+        return player2.getTieBreakPoint();
+    }
+
     public Integer getGameScore(String playerName) {
         if (isPlayer1(playerName))
             return player1.getGame();
         return player2.getGame();
-    }
-
-    private boolean isEnded() {
-        return player1.wonTheMatch(player2) || player2.wonTheMatch(player1);
     }
 
     private boolean isPlayer1(String playerName) {

@@ -11,12 +11,13 @@ public class Player {
     private final String name;
     private String point;
     private Integer game;
-    private Integer tieBreak;
+    private Integer tieBreakPoint;
 
     public Player(String name) {
         this.name = name;
         this.point = "0";
         this.game = 0;
+        this.tieBreakPoint = 0;
     }
 
     public void addNewPoint() {
@@ -28,7 +29,10 @@ public class Player {
             point = FORTY.getValue();
         else if (FORTY.getValue().equals(point) || ADVANTAGE.getValue().equals(point) )
             point = WIN_GAME.getValue();
+    }
 
+    public void addNewTieBreakPoint() {
+        tieBreakPoint++;
     }
 
     public void advantage() {
@@ -45,12 +49,12 @@ public class Player {
         this.point = FORTY.getValue();
     }
 
-    public boolean isDeuce(Player otherPlayer){
-        return FORTY.getValue().equals(point) && otherPlayer.getPoint().equals(point);
+    public boolean wonTheMatch(Player otherPlayer) {
+        return (game == 6 && (game - otherPlayer.getGame()) >= 2) || game == 7 || wonTheMatchByTieBreak(otherPlayer);
     }
 
-    public boolean wonTheMatch(Player otherPlayer) {
-        return (game == 6 && (game - otherPlayer.getGame()) >= 2) || game == 7;
+    private boolean wonTheMatchByTieBreak(Player otherPlayer) {
+        return tieBreakPoint >=7 && (tieBreakPoint - otherPlayer.tieBreakPoint) >=2;
     }
 
     public boolean wonTheGame() {

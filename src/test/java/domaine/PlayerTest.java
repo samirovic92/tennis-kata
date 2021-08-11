@@ -22,7 +22,19 @@ class PlayerTest {
     }
 
     @Test
-    public void should_not_add_New_Point_if_player_win_set() {
+    public void should_add_New_tie_Break_Point_() {
+        // Given
+        Player player = new Player("player 1");
+
+        // When
+        player.addNewTieBreakPoint();
+
+        // Then
+        assertEquals(player.getTieBreakPoint(), 1);
+    }
+
+    @Test
+    public void should_not_add_New_Point_if_player_win_the_game() {
         // Given
         Player player = new Player("player 1");
 
@@ -72,26 +84,6 @@ class PlayerTest {
 
         // Then
         assertTrue(player1.wonTheMatch(player2));
-    }
-
-    @Test
-    public void should_verify_DEUCE_rule() {
-        // Given
-        Player player1 = new Player("player 1");
-        Player player2 = new Player("player 2");
-
-        // When
-        player1.addNewPoint();
-        player1.addNewPoint();
-        player1.addNewPoint();
-
-        player2.addNewPoint();
-        player2.addNewPoint();
-        player2.addNewPoint();
-
-        // Then
-        assertTrue(player1.isDeuce(player2));
-        assertTrue(player2.isDeuce(player2));
     }
 
     @Test
